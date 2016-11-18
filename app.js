@@ -26,6 +26,7 @@ app.use(routes);
 // app.use(express.static(path.join(__dirname, '../public')));
 app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
 app.use('/jquery', express.static('./node_modules/jquery/dist'));
+app.use(express.static('./assets'));
 
 db.sync()
 .then(function () {
