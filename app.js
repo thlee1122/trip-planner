@@ -4,9 +4,10 @@ const nunjucks = require('nunjucks');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
+const models = require('./models');
 
-const db = require('./db').db;
-const routes = require('./routes');
+const db = require('./models/db');
+const routes = require('./server/routes');
 
 const app = express();
 
@@ -22,7 +23,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(routes);
 
-app.use(express.static(path.join(__dirname, '../public')));
+// app.use(express.static(path.join(__dirname, '../public')));
+app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
+app.use('/jquery', express.static('./node_modules/jquery/dist'));
 
 db.sync()
 .then(function () {
@@ -31,3 +34,24 @@ db.sync()
   });
 })
 .catch(console.error);
+
+// catch 404 (i.e., no route was hit) and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// handle all errors (anything passed into `next()`)
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  console.error(err);
+  res.render('error', {
+  	message: err,
+  	error: {
+  		status: err.status,
+  		stack: err.stack
+  	}
+  }
+  );
+});

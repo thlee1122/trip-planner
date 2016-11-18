@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+ <h3>Pages</h3>
+ <hr>
+ <ul class="list-unstyled">
+   <!-- PLACEHOLDER LIST OF PAGES -->
+        <!-- <li><a href="/wiki/{{ page.urlTitle }}">{{ page.title }}</a></li> -->
+        <li>
+        	<span>Hotels</span>
+        	<select>
+        		{% for hotel in hotels %}
+        		<option value="{{hotel.name}}">{{hotel.name}}</option>
+    		    {% endfor %}
+        	</select>
+        </li>
+
+        <li>
+        	<span>Restaurants</span>
+        	<select>
+        		{% for restaurant in restaurants %}
+        		<option value="{{restaurant.name}}">{{restaurant.name}}</option>
+    		    {% endfor %}
+        	</select>
+        </li>
+
+        <li>
+        	<span>Activites</span>
+        	<select>
+        		{% for activity in activities %}
+        		<option value="{{activity.name}}">{{activity.name}}</option>
+    		    {% endfor %}
+        	</select>
+        </li>
+ </ul>
+{% endblock %}
